@@ -1,9 +1,42 @@
 .issue {
+    display: flex;
+    flex-direction: column;
+
     background: var(--baseWhite);
+
     border: 1px solid #eee;
-    border-radius: 6px;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(128, 128, 128, 0.2);
+
+    overflow: hidden;
 }
 
 .issue + .issue {
     margin-top: 8px;
+}
+
+.issue__info {
+    display: flex;
+    flex-direction: column;
+
+    margin: 8px 8px 16px;
+}
+
+.issue__image {
+    width: 100%;
+    max-height: 200px;
+
+    object-fit: cover;
+}
+
+.issue__name {
+    margin: 6px 0 6px;
+
+    font-size: 24px;
+}
+
+.issue__description {
+    margin-bottom: 12px;
+
+    font-size: 16px;
 }

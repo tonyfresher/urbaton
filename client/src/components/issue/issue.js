@@ -17,9 +17,11 @@ class Issue extends React.Component {
         return (
             <div className={b()}>
                 <img className={b('image')} src={image} alt="Фото" />
-                <div className={b('name')}>{name}</div>
-                <div className={b('description')}>{description}</div>
-                <div className={b('votes')}>{votes}</div>
+                <div className={b('info')}>
+                    <h2 className={b('name')}>{name}</h2>
+                    <span className={b('description')}>{description}</span>
+                    <div className={b('votes')}>{votes}</div>
+                </div>
             </div>
         );
     }
