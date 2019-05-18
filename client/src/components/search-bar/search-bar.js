@@ -1,16 +1,15 @@
 import React from 'react';
 import b_ from 'b_';
-import './issues.css';
+import './search-bar.css';
 
-import Issue from '../issue'
-
-const b = b_.with('issues');
+const b = b_.with('search-bar');
 
 class Issues extends React.Component {
     render() {
         return (
             <div className={b()}>
-                <Issue />
+                <div>Привет!</div>
+                <div>Как дела?</div>
             </div>
         );
     }
