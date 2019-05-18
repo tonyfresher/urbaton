@@ -11,10 +11,8 @@ class List extends React.Component {
     render() {
         return (
             <div className={b()}>
-                <div className={b('issues')}>
-                    {/* <SearchBar /> */}
-                    <Issues />
-                </div>
+                <SearchBar />
+                <Issues />
             </div>
         );
     }

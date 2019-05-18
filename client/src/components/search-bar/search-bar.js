@@ -8,7 +8,7 @@ class Issues extends React.Component {
     render() {
         return (
             <div className={b()}>
-                <input type="text"/>
+                <input type="text" />
             </div>
         );
     }

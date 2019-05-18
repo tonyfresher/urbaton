@@ -1,5 +1,7 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Redirect, Route, Link } from 'react-router-dom';
+import {
+    BrowserRouter as Router, Switch, Redirect, Route,
+} from 'react-router-dom';
 
 import App from './components/app';
 import List from './pages/list';
