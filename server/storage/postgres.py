@@ -47,22 +47,22 @@ class PostgresClient:
         QUERY = f'''
             SELECT uid, name, description, image, coordinates, votes 
             FROM issues
-            WHERE uuid = {request_id};
+            WHERE issues.uid = %(request_id)s;
         '''
-        issue = self._fetch(QUERY, request_id=request_id)
+        issue = self._fetch(QUERY, request_id=request_id)[0]
         logging.info(f'Fetched issue: {issue}')
 
         return self.get_dict(issue)
 
     def put_issue(self, request_id, name, description, image, coorditates):
-        if request_id and name and description and image and coorditates:    
+        if request_id and name and description and image and coorditates:
             QUERY = '''
                 UPDATE issues
                 SET name = %(name)s,
                     description = %(description)s,
                     image = %(image)s,
-                    coordinated = %(coorditates)s
-                WHERE uuid = %(request_id)s
+                    coordinates = %(coorditates)s
+                WHERE issues.uid = %(request_id)s
             '''
             self._execute(
                 QUERY,
@@ -86,20 +86,21 @@ class PostgresClient:
         QUERY = '''
             SELECT votes
             FROM issues
-            WHERE uid = %(request_id)s
+            WHERE issues.uid = %(request_id)s
         '''
         votes = self._fetch(QUERY, request_id=request_id)
         logging.info(f'Fetched {votes} votes from issue with {request_id}')
 
         return votes
 
-    def post_issue_vote_by_id(self, request_id):
-        QUERY = f'''
+    def post_issue_votes_by_id(self, request_id):
+        QUERY = '''
             UPDATE issues
-            SET vote = vote + 1
-            WHERE uuid = {request_id}
+            SET votes = issues.votes + 1
+            WHERE issues.uid = %(request_id)s
         '''
         self._execute(QUERY, request_id=request_id)
+
         logging.info("Vote added")
 
     def _execute(self, query, **kwargs) -> None:
