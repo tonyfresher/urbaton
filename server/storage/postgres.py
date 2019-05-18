@@ -14,7 +14,7 @@ class PostgresClient:
     def get_issues(self):
         QUERY = '''
             SELECT
-                uuid, name, description, image, coordinates, votes 
+                issues.uid, issues.name, issues.description, issues.image, issues.coordinates, issues.votes 
             FROM issues;
         '''
 
@@ -29,11 +29,18 @@ class PostgresClient:
         return issues_dict
     
     def create_issue(self, uid, name, description, image, coordinates):
-        QUERY = f'''
-            INSERT INTO issues(uuid, name, description, image, coordinates)
-            VALUES ({uid}, {name}, {description}, {image}, {coordinates})
+        QUERY = '''
+            INSERT INTO issues(uid, name, description, image, coordinates)
+            VALUES (%(uid)s, %(name)s, %(description)s, %(image)s, %(coordinates)s)
         '''
-        self._execute(QUERY)
+        self._execute(
+            QUERY,
+            uid=uid,
+            name=name,
+            description=description,
+            image=image,
+            coordinates=coordinates
+        )
         logging.info('Successfully created')
 
     def get_issue_by_id(self, request_id):
@@ -48,30 +55,38 @@ class PostgresClient:
         return self.get_dict(issue)
 
     def put_issue(self, request_id, name, description, image, coorditates):
-        QUERY = f'''
-            UPDATE issues
-            SET name = {name},
-                description = {description},
-                image = {image},
-                coordinated = {coorditates}
-            WHERE uuid = {request_id}
-        '''
-        self._execute(QUERY, request_id=request_id)
-        logging.info('Successfully updated')
+        if request_id and name and description and image and coorditates:    
+            QUERY = '''
+                UPDATE issues
+                SET name = %(name)s,
+                    description = %(description)s,
+                    image = %(image)s,
+                    coordinated = %(coorditates)s
+                WHERE uuid = %(request_id)s
+            '''
+            self._execute(
+                QUERY,
+                request_id=request_id,
+                name=name,
+                description=description,
+                image=image,
+                coorditates=coorditates
+            )
+            logging.info('Successfully updated')
 
     def delete_issue_by_id(self, request_id):
-        QUERY = f'''
+        QUERY = '''
             DELETE FROM issues
-            WHERE uuid = {request_id}
+            WHERE issues.uid = %(request_id)s
         '''
         self._execute(QUERY, request_id=request_id)
         logging.info('Successfully deleted')
 
     def get_issue_votes_by_id(self, request_id):
-        QUERY = f'''
+        QUERY = '''
             SELECT votes
             FROM issues
-            WHERE uuid = {request_id}
+            WHERE uid = %(request_id)s
         '''
         votes = self._fetch(QUERY, request_id=request_id)
         logging.info(f'Fetched {votes} votes from issue with {request_id}')
@@ -104,7 +119,7 @@ class PostgresClient:
     @staticmethod
     def get_dict(issue):
         return {
-            'uid': issue.uuid,
+            'uid': issue.uid,
             'name': issue.name,
             'description': issue.description,
             'image': issue.image,

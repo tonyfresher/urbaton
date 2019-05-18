@@ -3,6 +3,8 @@ from uuid import uuid4
 
 from storage.postgres import postgres
 
+from json import dumps
+
 
 app = Blueprint('issues', __name__)
 
@@ -20,7 +22,7 @@ def get_issues():
 
 @app.route('/issues', methods=['POST'])
 def create_issue():
-    if not request.is_json():
+    if not request.is_json:
         return error('Not a JSON request')
     
     request_json = request.get_json()
@@ -28,9 +30,10 @@ def create_issue():
     name = request_json['name']
     description = request_json['description']
     image = request_json['image']
-    coordinates = request_json['coordinates']
+    coordinates = dumps(request_json['coordinates'])
+    # print(coordinates)
 
-    postgres.create_issue(uuid4(), name, description, image, coordinates)
+    postgres.create_issue(str(uuid4()), name, description, image, coordinates)
 
     return jsonify({})
 
@@ -52,6 +55,8 @@ def update_issue(id):
 
 @app.route('/issues/<id>', methods=['DELETE'])
 def delete_issue(id):
+    postgres.delete_issue_by_id(id)
+
     return jsonify({})
 
 @app.route('/issues/<id>/votes')
