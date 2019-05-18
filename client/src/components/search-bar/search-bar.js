@@ -5,7 +5,7 @@ import './search-bar.css';
 
 const b = b_.with('search-bar');
 
-class Issues extends React.Component {
+class SearchBar extends React.Component {
     render() {
         return (
             <div className={b()} />
@@ -13,4 +13,4 @@ class Issues extends React.Component {
     }
 }
 
-export default Issues;
+export default SearchBar;

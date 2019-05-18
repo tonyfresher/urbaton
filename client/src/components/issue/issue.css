@@ -23,7 +23,7 @@
     display: flex;
     flex-direction: column;
 
-    margin: 8px 8px 16px;
+    margin: 8px 8px 20px;
 }
 
 .issue__image {
@@ -36,7 +36,7 @@
 .issue__name {
     margin: 6px 0 4px;
 
-    font-size: 24px;
+    font-size: 22px;
 }
 
 .issue__address {
@@ -47,7 +47,11 @@
 }
 
 .issue__description {
-    margin-bottom: 12px;
+    margin-bottom: 16px;
+
+    max-height: 64px;
 
     font-size: 16px;
+
+    overflow: hidden;
 }

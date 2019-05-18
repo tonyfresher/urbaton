@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import b_ from 'b_';
 
+import VotesBlock from '../votes-block';
 import './issue.css';
 
 const b = b_.with('issue');
@@ -24,7 +25,7 @@ class Issue extends React.Component {
                     <h2 className={b('name')}>{name}</h2>
                     <span className={b('address')}>{address}</span>
                     <span className={b('description')}>{description}</span>
-                    <div className={b('votes')}>{votes}</div>
+                    <VotesBlock votes={votes} />
                 </div>
             </Link>
         );
