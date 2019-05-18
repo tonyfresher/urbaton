@@ -3,7 +3,7 @@ from uuid import uuid4
 
 from storage.postgres import postgres
 
-from json import dumps
+import json
 
 
 app = Blueprint('issues', __name__)
@@ -30,8 +30,7 @@ def create_issue():
     name = request_json['name']
     description = request_json['description']
     image = request_json['image']
-    coordinates = dumps(request_json['coordinates'])
-    # print(coordinates)
+    coordinates = request_json['coordinates']
 
     postgres.create_issue(str(uuid4()), name, description, image, coordinates)
 
@@ -39,9 +38,9 @@ def create_issue():
 
 @app.route('/issues/<id>')
 def get_issue_by_id(id):
-    postgres.get_issue_by_id(id)
+    response = postgres.get_issue_by_id(id)
 
-    return jsonify({})
+    return response if response else error("Not found")
 
 @app.route('/issues/<id>', methods=['PUT'])
 def update_issue(id):
@@ -50,9 +49,7 @@ def update_issue(id):
     name = request_json.get('name', '')
     description = request_json.get('description', '')
     image = request_json.get('image', '')
-    coordinates = request_json.get('coordinates', '')
-    if coordinates:
-        coordinates = dumps(coordinates)
+    coordinates = request_json.get('coordinates', {})
 
     postgres.put_issue(id, name, description, image, coordinates)
 
@@ -67,9 +64,11 @@ def delete_issue(id):
 @app.route('/issues/<id>/votes')
 def get_issue_votes(id):
     postgres.get_issue_votes_by_id(id)
+
     return jsonify({})
 
 @app.route('/issues/<id>/votes', methods=['POST'])
 def change_vote(id):
     postgres.post_issue_votes_by_id(id)
+
     return jsonify({})

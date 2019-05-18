@@ -3,6 +3,7 @@ from settings import settings
 
 import psycopg2 as pg
 import logging
+import json
 
 
 class PostgresClient:
@@ -21,6 +22,7 @@ class PostgresClient:
         issues = self._fetch(QUERY)
         issues_str = '\n'.join(map(str, issues))
         logging.info(f'Fetched {len(issues)} issues:\n{issues_str}')
+
         issues_dict = [
             self.get_dict(issue)
             for issue in issues
@@ -39,7 +41,7 @@ class PostgresClient:
             name=name,
             description=description,
             image=image,
-            coordinates=coordinates
+            coordinates=json.dumps(coordinates)
         )
         logging.info('Successfully created')
 
@@ -49,30 +51,28 @@ class PostgresClient:
             FROM issues
             WHERE issues.uid = %(request_id)s;
         '''
+        response = self._fetch(QUERY, request_id=request_id)
+
+        if not response:
+            return {}
+
         issue = self._fetch(QUERY, request_id=request_id)[0]
         logging.info(f'Fetched issue: {issue}')
 
         return self.get_dict(issue)
 
-    def put_issue(self, request_id, name, description, image, coorditates):
-        if request_id and name and description and image and coorditates:
-            QUERY = '''
-                UPDATE issues
-                SET name = %(name)s,
-                    description = %(description)s,
-                    image = %(image)s,
-                    coordinates = %(coorditates)s
-                WHERE issues.uid = %(request_id)s
-            '''
-            self._execute(
-                QUERY,
-                request_id=request_id,
-                name=name,
-                description=description,
-                image=image,
-                coorditates=coorditates
-            )
-            logging.info('Successfully updated')
+    def put_issue(self, request_id, name, description, image, coordinates):
+        QUERY = self.get_query(request_id, name, description, image, coordinates)
+
+        self._execute(
+            QUERY,
+            request_id=request_id,
+            name=name,
+            description=description,
+            image=image,
+            coordinates=json.dumps(coordinates)
+        )
+        logging.info('Successfully updated')
 
     def delete_issue_by_id(self, request_id):
         QUERY = '''
@@ -127,6 +127,22 @@ class PostgresClient:
             'coordinates': issue.coordinates,
             'votes': issue.votes,
         }
+
+    @staticmethod
+    def get_query(request_id, name, description, image, coordinates):
+        QUERY = 'UPDATE issues SET '
+        if name:
+            QUERY += 'name = %(name)s, '
+        if description:
+            QUERY += 'description = %(description)s, '
+        if image:
+            QUERY += 'image = %(image)s, '
+        if coordinates:
+            QUERY += 'coordinates = %(coordinates)s '
+        else:
+            QUERY = QUERY[:-2] + ' '
+
+        return QUERY + 'WHERE issues.uid = %(request_id)s'
 
 postgres = PostgresClient(settings.PG_HOST, settings.PG_PORT, settings.PG_DBNAME,
                           settings.PG_USER, settings.PG_PASS)
