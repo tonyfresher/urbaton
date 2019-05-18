@@ -5,6 +5,12 @@ from storage.postgres import postgres
 
 app = Blueprint('issues', __name__)
 
+def error(message):
+    return jsonify({
+        'status': 'error',
+        'message': message
+    })
+
 @app.route('/issues')
 def get_issues():
     issues = postgres.get_issues()
@@ -13,12 +19,17 @@ def get_issues():
 
 @app.route('/issues', methods=['POST'])
 def create_issue():
+    if not request.is_json():
+        return error('Not a JSON request')
+    
     request_json = request.get_json()
     
-    name = request_json['name'] if request_json else ''
-    description = request_json['description'] if request_json else ''
-    image = request_json['image'] if request_json else ''
-    coordinates = request_json['coordinates'] if request_json else ''
+    name = request_json['name']
+    description = request_json['description']
+    image = request_json['image']
+    coordinates = request_json['coordinates']
+
+    # postgres.create_issue(asasddasdas)
     
     return jsonify({})
 

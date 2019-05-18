@@ -13,22 +13,21 @@ class PostgresClient:
 
     def get_issues(self):
         QUERY = '''
-            SELECT * FROM issues;
+            SELECT
+                uuid, name, description, image, coordinates, votes 
+            FROM issues;
         '''
+
         issues = self._fetch(QUERY)
         issues_str = '\n'.join(map(str, issues))
-        logging.info(
-            'Fetched {len} new audience requests: \n{issues}'
-                .format(len=len(issues), issues=issues_str)
-        )
+        logging.info(f'Fetched {len(issues)} issues:\n{issues_str}')
 
         return issues
-        # return []
     
-    def post_issue(self, *args):
+    def create_issue(self, name, description, image, coordinates):
         QUERY = '''
-            INSERT INTO issues(name, description, image, coordinates)
-            VALUES ({}, {}, {}, {})
+            INSERT INTO issues(uuid, name, description, image, coordinates)
+            VALUES ({}, {}, {}, {}, {})
         '''.format(*args)
 
     def get_issue_by_id(self, request_id):
