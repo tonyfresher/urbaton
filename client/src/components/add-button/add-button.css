@@ -12,7 +12,7 @@
     width: 56px;
     height: 56px;
 
-    background: var(--baseBlue);
+    background: var(--accentBlue);
     border-radius: 50%;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
 }
@@ -31,5 +31,5 @@
     width: 32px;
     height: 32px;
 
-    fill: var(--baseWhite);
+    fill: var(--white);
 }

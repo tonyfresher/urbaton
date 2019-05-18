@@ -2,14 +2,17 @@
     display: flex;
     flex-direction: column;
 
-    color: var(--baseBlack);
-    background: var(--baseWhite);
+    background: var(--white);
 
     border: 1px solid #eee;
     border-radius: 8px;
     box-shadow: 0 0 8px rgba(128, 128, 128, 0.2);
 
     overflow: hidden;
+}
+
+.issue * {
+    color: var(--black);
 }
 
 .issue + .issue {
@@ -31,9 +34,16 @@
 }
 
 .issue__name {
-    margin: 6px 0 6px;
+    margin: 6px 0 4px;
 
     font-size: 24px;
+}
+
+.issue__address {
+    margin: 0 0 12px;
+
+    color: var(--darkGray);
+    font-size: 16px;
 }
 
 .issue__description {

@@ -2,10 +2,11 @@
 
 :root
 {
-    --baseGray: #f9f9f9;
-    --baseBlue: #4970fb;
-    --baseBlack: #252525;
-    --baseWhite: #fff;
+    --lightGray: #f9f9f9;
+    --darkGray: #777;
+    --accentBlue: #4970fb;
+    --black: #252525;
+    --white: #fff;
 }
 
 html,
@@ -45,7 +46,7 @@ a:hover
     #root {
         display: flex;
 
-        background: var(--baseBlack);
+        background: var(--black);
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     }
 
