@@ -12,6 +12,7 @@ class List extends React.Component {
         return (
             <div className={b()}>
                 <div className={b('surveys')}>
+                    {/* <SearchBar /> */}
                     <Issues />
                 </div>
             </div>

@@ -8,8 +8,7 @@ class Issues extends React.Component {
     render() {
         return (
             <div className={b()}>
-                <div>Привет!</div>
-                <div>Как дела?</div>
+                <input type="text"/>
             </div>
         );
     }
