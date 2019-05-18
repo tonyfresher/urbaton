@@ -1,3 +1,3 @@
-import App from './app.js';
+import List from './list';
 
-export default App;
+export default List;
