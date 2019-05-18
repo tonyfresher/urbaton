@@ -12,9 +12,9 @@ class PostgresClient:
                                      target_session_attrs='read-write', sslmode='verify-full')
 
     def get_issues(self):
-        QUERY = """
+        QUERY = '''
             SELECT * FROM issues;
-        """
+        '''
         issues = self._fetch(QUERY)
         issues_str = '\n'.join(map(str, issues))
         logging.info(
@@ -26,18 +26,18 @@ class PostgresClient:
         # return []
     
     def post_issue(self, *args):
-        QUERY = """
+        QUERY = '''
             INSERT INTO issues(name, description, image, coordinates)
             VALUES ({}, {}, {}, {})
-        """.format(*args)
+        '''.format(*args)
 
     def get_issue_by_id(self, request_id):
-        QUERY = """
+        QUERY = '''
             SELECT issue.uid, issue.name, issue.description, issue.image, issue.coordinates, issue.votes 
             FROM issues as issue
                 JOIN survey_audience_requests as request ON request.survey_id = survey.id
             WHERE request.uuid = %(request_id)s;
-        """
+        '''
         issue = self._fetch(QUERY, request_id=request_id)
 
         logging.info(
@@ -49,21 +49,21 @@ class PostgresClient:
 
     def put_issue(self, name='', description='', image='', coorditates={}):
         # name = 
-        QUERY = """
+        QUERY = '''
             UPDATE issues
             SET 
-        """
+        '''
 
     def delete_issue_by_id(self, request_id):
-        QUERY = """
-        """
+        QUERY = '''
+        '''
 
     def get_issue_votes_by_id(self, request_id):
-        QUERY = """
+        QUERY = '''
             SELECT issue.votes
             FROM issues as issue
             WHERE request.uuid = %(request_id)s
-        """
+        '''
         votes = self._fetch(QUERY, request_id=request_id)
 
         logging.info(
@@ -74,10 +74,16 @@ class PostgresClient:
         return votes
 
     def post_issue_vote_by_id(self, request_id):
-        QUERY = """
-        """
+        QUERY = '''
+        '''
 
-    def _fetch(self, query: str, **kwargs: str):
+    def _execute(self, query, **kwargs) -> None:
+        with self.connection.cursor() as cursor:
+            cursor.execute(query, kwargs)
+        
+        self.connection.commit()
+
+    def _fetch(self, query, **kwargs):
         with self.connection.cursor(cursor_factory=NamedTupleCursor) as cursor:
             cursor.execute(query, kwargs)
 
