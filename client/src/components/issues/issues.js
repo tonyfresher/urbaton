@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import b_ from 'b_';
 
 import Issue from '../issue';
@@ -69,12 +70,14 @@ class Issues extends React.Component {
         return (
             <div className={b()}>
                 {issues.map(issue => (
-                    <Issue
-                        image={issue.image}
-                        name={issue.name}
-                        description={issue.description}
-                        votes={issue.votes}
-                    />
+                    <Link to={`/issue/${issue.uid}`}>
+                        <Issue
+                            image={issue.image}
+                            name={issue.name}
+                            description={issue.description}
+                            votes={issue.votes}
+                        />
+                    </Link>
                 ))}
             </div>
         );
