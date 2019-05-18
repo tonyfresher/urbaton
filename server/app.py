@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 
 
 app = Blueprint('issues', __name__)
@@ -9,51 +9,39 @@ def get_issues():
 
 @app.route('/issues', methods=['POST'])
 def create_issue():
-    name = ''
-    description = ''
-    image = ''
-    coordinates = ''
-
-    json = {
-        'name': name,
-        'description': description,
-        'image': image,
-        'coordinates': coordinates
-    }
-
-    return jsonify(json)
+    request_json = request.get_json()
+    
+    name = request_json['name'] if request_json else ''
+    description = request_json['description'] if request_json else ''
+    image = request_json['image'] if request_json else ''
+    coordinates = request_json['coordinates'] if request_json else ''
+    
+    return jsonify({})
 
 @app.route('/issues/<id>')
 def get_issue_by_id(id):
-    return jsonify({
-        'uid': '',
-        'name': '',
-        'description': '',
-        'image': '',
-        'coordinates': {'lat': 0.0, 'lon': 0.0},
-        'votes': ''
-    })
+
+    return jsonify({})
 
 @app.route('/issues/<id>', methods=['PUT'])
 def update_issue(id):
-    return True
+    request_json = request.get_json()
 
-@app.route('/issues/id', methods=['DELETE'])
+    name = request_json.get('name')
+    description = request_json.get('description')
+    image = request_json.get('image')
+    coordinates = request_json.get('coordinates')
+
+    return jsonify({})
+
+@app.route('/issues/<id>', methods=['DELETE'])
 def delete_issue(id):
-    return True
+    return jsonify({})
 
 @app.route('/issues/<id>/votes')
 def get_issue_votes(id):
-    return {'amount': 0}
+    return jsonify({})
 
 @app.route('/issues/<id>/votes', methods=['POST'])
 def change_vote(id):
-    return {'enable': True}
-
-@app.route('/issues/<id>/money')
-def get_amount_of_money(id):
-    return {'amount': 0.0}
-
-@app.route('/issues/<id>/money', methods=['POST'])
-def send_money(id):
-    return True
+    return jsonify({})
