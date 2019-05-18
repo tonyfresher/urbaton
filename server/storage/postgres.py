@@ -10,7 +10,8 @@ class PostgresClient:
                                      user=user, password=password,
                                      target_session_attrs='read-write', sslmode='verify-full')
 
-    def get_issues(self): ...
+    def get_issues(self):
+        return []
 
 postgres = PostgresClient(settings.PG_HOST, settings.PG_PORT, settings.PG_DBNAME,
                           settings.PG_USER, settings.PG_PASS)

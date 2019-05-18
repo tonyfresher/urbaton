@@ -8,6 +8,7 @@ app = Blueprint('issues', __name__)
 @app.route('/issues')
 def get_issues():
     issues = postgres.get_issues()
+
     return jsonify(issues)
 
 @app.route('/issues', methods=['POST'])
