@@ -1,5 +1,9 @@
-import psycopg2 as psycopg2
+import psycopg2 as pg
+from psycopg2.extras import NamedTupleCursor
+from typing import List, NamedTuple, Dict, Any
 
 
 class PostgresClient:
-    pass
+    def __init__(self, host, port, dbname, user, password, cert):
+        self.connection = pg.connect(host=host, port=port, dbname=dbname,
+                                     user=user, password=password, sslrootcert=cert)
