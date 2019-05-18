@@ -31,10 +31,10 @@ def get_issue_by_id(id):
 def update_issue(id):
     request_json = request.get_json()
 
-    name = request_json.get('name')
-    description = request_json.get('description')
-    image = request_json.get('image')
-    coordinates = request_json.get('coordinates')
+    name = request_json.get('name', '')
+    description = request_json.get('description', '')
+    image = request_json.get('image', '')
+    coordinates = request_json.get('coordinates', '')
 
     return jsonify({})
 
