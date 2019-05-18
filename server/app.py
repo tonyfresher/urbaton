@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify, request
+from uuid import uuid4
 
 from storage.postgres import postgres
 
@@ -29,7 +30,7 @@ def create_issue():
     image = request_json['image']
     coordinates = request_json['coordinates']
 
-    # postgres.create_issue(asasddasdas)
+    postgres.create_issue(uuid4(), name, description, image, coordinates)
     
     return jsonify({})
 

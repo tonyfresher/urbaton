@@ -21,60 +21,72 @@ class PostgresClient:
         issues = self._fetch(QUERY)
         issues_str = '\n'.join(map(str, issues))
         logging.info(f'Fetched {len(issues)} issues:\n{issues_str}')
+        issues_dict = [
+            self.get_dict(issue)
+            for issue in issues
+        ]
 
-        return issues
+        return issues_dict
     
-    def create_issue(self, name, description, image, coordinates):
-        QUERY = '''
+    def create_issue(self, uid, name, description, image, coordinates):
+        # uid = ""
+        QUERY = f'''
             INSERT INTO issues(uuid, name, description, image, coordinates)
-            VALUES ({}, {}, {}, {}, {})
-        '''.format(*args)
+            VALUES ({uid}, {name}, {description}, {image}, {coordinates})
+        '''
+        self._execute(QUERY)
+        logging.info('Successfully created')
 
     def get_issue_by_id(self, request_id):
-        QUERY = '''
-            SELECT issue.uid, issue.name, issue.description, issue.image, issue.coordinates, issue.votes 
-            FROM issues as issue
-                JOIN survey_audience_requests as request ON request.survey_id = survey.id
-            WHERE request.uuid = %(request_id)s;
+        QUERY = f'''
+            SELECT uid, name, description, image, coordinates, votes 
+            FROM issues
+            WHERE uuid = {request_id};
         '''
         issue = self._fetch(QUERY, request_id=request_id)
+        logging.info(f'Fetched issue: {issue}')
 
-        logging.info(
-            'Fetched issue: \n{issue}'
-                .format(issue=str(issue))
-        )
+        return self.get_dict(issue)
 
-        return issue
-
-    def put_issue(self, name='', description='', image='', coorditates={}):
-        # name = 
-        QUERY = '''
+    def put_issue(self, request_id, name, description, image, coorditates):
+        QUERY = f'''
             UPDATE issues
-            SET 
+            SET name = {name},
+                description = {description},
+                image = {image},
+                coordinated = {coorditates}
+            WHERE uuid = {request_id}
         '''
+        self._execute(QUERY, request_id=request_id)
+        logging.info('Successfully updated')
 
     def delete_issue_by_id(self, request_id):
-        QUERY = '''
+        QUERY = f'''
+            DELETE FROM issues
+            WHERE uuid = {request_id}
         '''
+        self._execute(QUERY, request_id=request_id)
+        logging.info('Successfully deleted')
 
     def get_issue_votes_by_id(self, request_id):
-        QUERY = '''
-            SELECT issue.votes
-            FROM issues as issue
-            WHERE request.uuid = %(request_id)s
+        QUERY = f'''
+            SELECT votes
+            FROM issues
+            WHERE uuid = {request_id}
         '''
         votes = self._fetch(QUERY, request_id=request_id)
-
-        logging.info(
-            'Fetched {} votes from issue with {}'
-                .format(str(votes), str(request_id))
-        )
+        logging.info(f'Fetched {votes} votes from issue with {request_id}')
 
         return votes
 
     def post_issue_vote_by_id(self, request_id):
-        QUERY = '''
+        QUERY = f'''
+            UPDATE issues
+            SET vote = vote + 1
+            WHERE uuid = {request_id}
         '''
+        self._execute(QUERY, request_id=request_id)
+        logging.info("Vote added")
 
     def _execute(self, query, **kwargs) -> None:
         with self.connection.cursor() as cursor:
@@ -89,6 +101,17 @@ class PostgresClient:
             fetched = cursor.fetchall()
 
             return fetched
+
+    @staticmethod
+    def get_dict(issue):
+        return {
+            'uid': issue.uuid,
+            'name': issue.name,
+            'description': issue.description,
+            'image': issue.image,
+            'coordinates': issue.coordinates,
+            'votes': issue.votes,
+        }
 
 postgres = PostgresClient(settings.PG_HOST, settings.PG_PORT, settings.PG_DBNAME,
                           settings.PG_USER, settings.PG_PASS)
