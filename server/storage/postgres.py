@@ -29,7 +29,6 @@ class PostgresClient:
         return issues_dict
     
     def create_issue(self, uid, name, description, image, coordinates):
-        # uid = ""
         QUERY = f'''
             INSERT INTO issues(uuid, name, description, image, coordinates)
             VALUES ({uid}, {name}, {description}, {image}, {coordinates})

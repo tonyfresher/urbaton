@@ -31,7 +31,7 @@ def create_issue():
     coordinates = request_json['coordinates']
 
     postgres.create_issue(uuid4(), name, description, image, coordinates)
-    
+
     return jsonify({})
 
 @app.route('/issues/<id>')
