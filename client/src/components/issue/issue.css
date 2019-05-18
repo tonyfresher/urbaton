@@ -1,0 +1,9 @@
+.issue {
+    background: var(--baseWhite);
+    border: 1px solid #eee;
+    border-radius: 6px;
+}
+
+.issue + .issue {
+    margin-top: 8px;
+}

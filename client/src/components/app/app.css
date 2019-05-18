@@ -3,8 +3,9 @@
 :root
 {
     --baseGray: #f9f9f9;
-    --baseBlue: #008c33;
-    --baseBlack: #000;
+    --baseBlue: #4970fb;
+    --baseBlack: #252525;
+    --baseWhite: #fff;
 }
 
 html,
@@ -20,6 +21,8 @@ body {
 }
 
 .app {
+    position: relative;
+
     display: flex;
     flex-direction: column;
 

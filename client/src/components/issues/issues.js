@@ -1,8 +1,9 @@
 import React from 'react';
 import b_ from 'b_';
-import './issues.css';
 
-import Issue from '../issue'
+import Issue from '../issue';
+
+import './issues.css';
 
 const b = b_.with('issues');
 
