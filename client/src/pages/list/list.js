@@ -5,13 +5,13 @@ import SearchBar from '../../components/search-bar';
 import Issues from '../../components/issues';
 import './list.css';
 
-const b = b_.with('page-list');
+const b = b_.with('list-page');
 
 class List extends React.Component {
     render() {
         return (
             <div className={b()}>
-                <div className={b('surveys')}>
+                <div className={b('issues')}>
                     {/* <SearchBar /> */}
                     <Issues />
                 </div>

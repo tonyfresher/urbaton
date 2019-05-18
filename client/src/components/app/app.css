@@ -7,11 +7,14 @@
     --baseBlack: #000;
 }
 
-body
-{
-    margin: 0;
-
+html,
+body,
+#root {
     height: 100%;
+}
+
+body {
+    margin: 0;
 
     font-family: 'IBM Plex Sans', sans-serif;
 }
@@ -33,4 +36,12 @@ a {
 a:hover
 {
     color: #ff6666;
+}
+
+@media (min-width: 600px) {
+    .app {
+        margin: auto;
+
+        width: 450px;
+    }
 }
