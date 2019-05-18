@@ -14,67 +14,94 @@ class PostgresClient:
     def get_issues(self):
         QUERY = '''
             SELECT
-                uuid, name, description, image, coordinates, votes 
+                issues.uid, issues.name, issues.description, issues.image, issues.coordinates, issues.votes 
             FROM issues;
         '''
 
         issues = self._fetch(QUERY)
         issues_str = '\n'.join(map(str, issues))
         logging.info(f'Fetched {len(issues)} issues:\n{issues_str}')
+        issues_dict = [
+            self.get_dict(issue)
+            for issue in issues
+        ]
 
-        return issues
+        return issues_dict
     
-    def create_issue(self, name, description, image, coordinates):
+    def create_issue(self, uid, name, description, image, coordinates):
         QUERY = '''
-            INSERT INTO issues(uuid, name, description, image, coordinates)
-            VALUES ({}, {}, {}, {}, {})
-        '''.format(*args)
+            INSERT INTO issues(uid, name, description, image, coordinates)
+            VALUES (%(uid)s, %(name)s, %(description)s, %(image)s, %(coordinates)s)
+        '''
+        self._execute(
+            QUERY,
+            uid=uid,
+            name=name,
+            description=description,
+            image=image,
+            coordinates=coordinates
+        )
+        logging.info('Successfully created')
 
     def get_issue_by_id(self, request_id):
-        QUERY = '''
-            SELECT issue.uid, issue.name, issue.description, issue.image, issue.coordinates, issue.votes 
-            FROM issues as issue
-                JOIN survey_audience_requests as request ON request.survey_id = survey.id
-            WHERE request.uuid = %(request_id)s;
+        QUERY = f'''
+            SELECT uid, name, description, image, coordinates, votes 
+            FROM issues
+            WHERE issues.uid = %(request_id)s;
         '''
-        issue = self._fetch(QUERY, request_id=request_id)
+        issue = self._fetch(QUERY, request_id=request_id)[0]
+        logging.info(f'Fetched issue: {issue}')
 
-        logging.info(
-            'Fetched issue: \n{issue}'
-                .format(issue=str(issue))
-        )
+        return self.get_dict(issue)
 
-        return issue
-
-    def put_issue(self, name='', description='', image='', coorditates={}):
-        # name = 
-        QUERY = '''
-            UPDATE issues
-            SET 
-        '''
+    def put_issue(self, request_id, name, description, image, coorditates):
+        if request_id and name and description and image and coorditates:
+            QUERY = '''
+                UPDATE issues
+                SET name = %(name)s,
+                    description = %(description)s,
+                    image = %(image)s,
+                    coordinates = %(coorditates)s
+                WHERE issues.uid = %(request_id)s
+            '''
+            self._execute(
+                QUERY,
+                request_id=request_id,
+                name=name,
+                description=description,
+                image=image,
+                coorditates=coorditates
+            )
+            logging.info('Successfully updated')
 
     def delete_issue_by_id(self, request_id):
         QUERY = '''
+            DELETE FROM issues
+            WHERE issues.uid = %(request_id)s
         '''
+        self._execute(QUERY, request_id=request_id)
+        logging.info('Successfully deleted')
 
     def get_issue_votes_by_id(self, request_id):
         QUERY = '''
-            SELECT issue.votes
-            FROM issues as issue
-            WHERE request.uuid = %(request_id)s
+            SELECT votes
+            FROM issues
+            WHERE issues.uid = %(request_id)s
         '''
         votes = self._fetch(QUERY, request_id=request_id)
-
-        logging.info(
-            'Fetched {} votes from issue with {}'
-                .format(str(votes), str(request_id))
-        )
+        logging.info(f'Fetched {votes} votes from issue with {request_id}')
 
         return votes
 
-    def post_issue_vote_by_id(self, request_id):
+    def post_issue_votes_by_id(self, request_id):
         QUERY = '''
+            UPDATE issues
+            SET votes = issues.votes + 1
+            WHERE issues.uid = %(request_id)s
         '''
+        self._execute(QUERY, request_id=request_id)
+
+        logging.info("Vote added")
 
     def _execute(self, query, **kwargs) -> None:
         with self.connection.cursor() as cursor:
@@ -89,6 +116,17 @@ class PostgresClient:
             fetched = cursor.fetchall()
 
             return fetched
+
+    @staticmethod
+    def get_dict(issue):
+        return {
+            'uid': issue.uid,
+            'name': issue.name,
+            'description': issue.description,
+            'image': issue.image,
+            'coordinates': issue.coordinates,
+            'votes': issue.votes,
+        }
 
 postgres = PostgresClient(settings.PG_HOST, settings.PG_PORT, settings.PG_DBNAME,
                           settings.PG_USER, settings.PG_PASS)
