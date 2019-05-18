@@ -15,7 +15,12 @@ class PostgresClient:
     def get_issues(self):
         QUERY = '''
             SELECT
-                issues.uid, issues.name, issues.description, issues.image, issues.coordinates, issues.votes 
+                issues.uid,
+                issues.name,
+                issues.description,
+                issues.image,
+                issues.coordinates,
+                issues.votes 
             FROM issues;
         '''
 
