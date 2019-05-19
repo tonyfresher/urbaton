@@ -88,7 +88,7 @@ class IssueInfo extends React.Component {
                     <h2 className={b('name')}>{issue.name}</h2>
                     <span className={b('address')}>{issue.coordinates.address}</span>
                     <span className={b('description')}>{issue.description}</span>
-                    {isEmpty(project) || project.status === 'error'
+                    {isEmpty(project)
                         ? (<VotesBlock uid={issue.uid} votes={issue.votes} showButton />)
                         : this.renderProject()}
                 </div>
