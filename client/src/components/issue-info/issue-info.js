@@ -5,6 +5,7 @@ import { isEmpty } from 'lodash';
 import Loader from '../loader';
 import VotesBlock from '../votes-block';
 import ProjectInfo from '../project-info';
+import MoneyBlock from '../money-block';
 import './issue-info.css';
 
 const b = b_.with('issue-info');
@@ -56,6 +57,24 @@ class IssueInfo extends React.Component {
         return (<Loader />);
     }
 
+    renderProject() {
+        const { project } = this.state;
+
+        return (
+            <>
+                <MoneyBlock
+                    projectUid={project.uid}
+                    cost={project.cost}
+                    showButton
+                />
+                <ProjectInfo
+                    name={project.name}
+                    description={project.description}
+                />
+            </>
+        );
+    }
+
     renderInfo() {
         const {
             issue,
@@ -69,15 +88,9 @@ class IssueInfo extends React.Component {
                     <h2 className={b('name')}>{issue.name}</h2>
                     <span className={b('address')}>{issue.coordinates.address}</span>
                     <span className={b('description')}>{issue.description}</span>
-                    {isEmpty(project)
+                    {isEmpty(project) || project.status === 'error'
                         ? (<VotesBlock uid={issue.uid} votes={issue.votes} showButton />)
-                        : (
-                            <ProjectInfo
-                                name={project.name}
-                                description={project.description}
-                                cost={project.cost}
-                            />
-                        )}
+                        : this.renderProject()}
                 </div>
             </>
         );
