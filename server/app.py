@@ -15,6 +15,13 @@ def error(message):
         'message': message
     })
 
+@app.after_request
+def cors(res):
+    header = res.headers
+    header['Access-Control-Allow-Origin'] = '*'
+
+    return res
+
 @app.route('/issues')
 def get_issues():
     issues = postgres.get_issues()
