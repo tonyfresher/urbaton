@@ -5,13 +5,12 @@
         {
             "src": "client/package.json",
             "use": "@now/static-build",
-            "config": {
-                "distDir": "build"
-            }
+            "config": { "distDir": "build" }
         },
         {
             "src": "server/*.py",
-            "use": "@now/python"
+            "use": "@now/python",
+            "config": { "maxLambdaSize": "50mb" }
         }
     ],
     "routes": [
