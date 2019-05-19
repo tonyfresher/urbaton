@@ -8,9 +8,17 @@
             "config": {
                 "distDir": "build"
             }
+        },
+        {
+            "src": "server/*.py",
+            "use": "@now/python"
         }
     ],
     "routes": [
+        {
+            "src": "/api/(.*)",
+            "dest": "/server/$1"
+        },
         {
             "src": "/(.*)",
             "dest": "/client/$1"
