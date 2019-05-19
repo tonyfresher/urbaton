@@ -99,7 +99,7 @@ def get_issue_votes(id):
 
     return response[0][0] if response else error('Issue not found')
 
-@app.route('/issues/<id>/votes', methods=['POST'])
+@app.route('/issues/<id>/votes', methods=['PUT'])
 def change_vote(id):
     postgres.post_issue_votes_by_id(id)
 
