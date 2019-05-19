@@ -1,0 +1,35 @@
+.add-button {
+    position: absolute;
+
+    right: 16px;
+    bottom: 16px;
+}
+
+.add-button__button {
+    display: flex;
+    justify-content: center;
+
+    width: 56px;
+    height: 56px;
+
+    background: var(--accentBlue);
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+}
+
+.add-button__button:hover {
+    filter: brightness(0.96);
+}
+
+.add-button__button:active {
+    filter: brightness(0.92);
+}
+
+.add-button__plus {
+    margin: auto;
+
+    width: 32px;
+    height: 32px;
+
+    fill: var(--white);
+}
