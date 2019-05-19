@@ -1,0 +1,9 @@
+.create-page {
+    padding-bottom: 90px;
+
+    height: 100%;
+
+    background: var(--lightGray);
+
+    overflow-y: scroll;
+}

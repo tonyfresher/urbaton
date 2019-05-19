@@ -1,3 +1,3 @@
-import List from './list';
+import ListPage from './list-page';
 
-export default List;
+export default ListPage;

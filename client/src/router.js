@@ -4,9 +4,9 @@ import {
 } from 'react-router-dom';
 
 import App from './components/app';
-import List from './pages/list';
-// import Create from 'pages/create';
-// import Issue from 'pages/issue';
+import ListPage from './pages/list';
+import IssuePage from './pages/issue';
+import CreatePage from './pages/create';
 
 class AppRouter extends React.Component {
     render() {
@@ -15,10 +15,10 @@ class AppRouter extends React.Component {
                 <App>
                     <Switch>
                         <Redirect exact from="/" to="/list" />
-                        <Route path="/list" component={List} />
-                        {/* <Route path="/create" component={Create} />
-                        <Route path="/issue/:id" component={Issue} /> */
-                        /* <Route path="*" component={Error} status={404} /> */}
+                        <Route path="/list" component={ListPage} />
+                        <Route path="/issue/:id" component={IssuePage} />
+                        <Route path="/create" component={CreatePage} />
+                        {/* <Route path="*" component={Error} status={404} /> */}
                     </Switch>
                 </App>
             </Router>
