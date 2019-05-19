@@ -1,0 +1,37 @@
+.search-bar {
+    padding: 0 8px 0 16px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    border: 1px solid var(--lightGray);
+    border-radius: 8px;
+
+    box-shadow: 0 0 8px rgba(128, 128, 128, 0.2);
+
+    overflow: hidden;
+}
+
+.search-bar__lens {
+    /* TODO: Добавить иконку и показать */
+    display: none;
+
+    margin-right: 12px;
+}
+
+.search-bar__input {
+    padding: 8px 0;
+
+    width: 100%;
+
+    font-size: 22px;
+
+    border: 0;
+
+    box-sizing: border-box;
+}
+
+.search-bar__input:focus {
+    outline: none;
+}
