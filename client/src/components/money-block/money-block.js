@@ -31,7 +31,7 @@ class MoneyBlock extends React.Component {
                         </span>
                     </div>
                     <div className={b('money')}>
-                        <span className={b('money-count')}>{`${money}/${cost} ₽`}</span>
+                        <span className={b('money-count')}>{`${money} из ${cost} ₽`}</span>
                         <span className={b('caption-label')}>
                             {'Собрано'}
                         </span>
