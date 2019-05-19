@@ -7,10 +7,12 @@ const b = b_.with('search-bar');
 
 class SearchBar extends React.Component {
     render() {
+        const { onInput } = this.props;
+
         return (
             <div className={b()}>
                 <div className={b('lens')} />
-                <input className={b('input')} type="text" placeholder="Поиск" />
+                <input className={b('input')} type="text" placeholder="Поиск" onInput={onInput} />
             </div>
         );
     }

@@ -9,12 +9,18 @@ import './issues.css';
 
 const b = b_.with('issues');
 
+function shouldShowIssue(issue, query) {
+    return issue.name.toLowerCase().includes(query.toLowerCase()) ||
+        issue.description.toLowerCase().includes(query.toLowerCase());
+}
+
 class Issues extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
             loaded: false,
+            query: '',
             issues: [],
             error: null
         };
@@ -37,24 +43,35 @@ class Issues extends React.Component {
         }
     }
 
+    onInput = event => {
+        const { value: query } = event.target;
+
+        this.setState(() => ({ query }));
+    }
+
     render() {
-        const { issues } = this.state;
+        const {
+            query,
+            issues
+        } = this.state;
 
         return (
             <div className={b()}>
                 <IssuesFilter />
-                <SearchBar />
-                {issues.map(issue => (
-                    <IssueCard
-                        uid={issue.uid}
-                        image={issue.image}
-                        name={issue.name}
-                        address={issue.coordinates.address}
-                        description={issue.description}
-                        votes={issue.votes}
-                        key={issue.uid}
-                    />
-                ))}
+                <SearchBar onInput={this.onInput} />
+                {issues
+                    .filter(issue => shouldShowIssue(issue, query))
+                    .map(issue => (
+                        <IssueCard
+                            uid={issue.uid}
+                            image={issue.image}
+                            name={issue.name}
+                            address={issue.coordinates.address}
+                            description={issue.description}
+                            votes={issue.votes}
+                            key={issue.uid}
+                        />
+                    ))}
             </div>
         );
     }
