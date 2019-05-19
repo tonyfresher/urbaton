@@ -19,6 +19,7 @@ class VotesBlock extends React.Component {
         event.preventDefault();
 
         this.setState(({ voted }) => ({ voted: !voted }));
+        fetch('', { method: 'POST' });
     }
 
     render() {
@@ -37,7 +38,7 @@ class VotesBlock extends React.Component {
                             {'Голосование'}
                         </span>
                     </div>
-                    <div className={b('vote-button', { checked: voted })} onClick={this.toggleVote}>
+                    <button className={b('vote-button', { checked: voted })} onClick={this.toggleVote}>
                         <div className={b('votes-count-wrapper')}>
                             <div className={b('thumb')} />
                             <span className={b('votes-count')}>{`${votes} голосов`}</span>
@@ -45,7 +46,7 @@ class VotesBlock extends React.Component {
                         <span className={b('caption-label')}>
                             {'Собрано'}
                         </span>
-                    </div>
+                    </button>
                 </div>
             </div>
         );
