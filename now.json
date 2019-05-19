@@ -8,10 +8,6 @@
             "config": {
                 "distDir": "client/build"
             }
-        },
-        {
-            "src": "server/**/*.py",
-            "use": "@now/python"
         }
     ],
     "routes": [
@@ -51,7 +47,6 @@
                 "cache-control": "s-maxage=0"
             },
             "dest": "/index.html"
-        },
-        { "src": "/server/(.*)", "dest": "/$1" }
+        }
     ]
 }
