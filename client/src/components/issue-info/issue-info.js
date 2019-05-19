@@ -21,7 +21,7 @@ class IssueInfo extends React.Component {
         const { uid } = this.props;
 
         try {
-            const res = await fetch(`http://130.193.41.152/issues/${uid}`);
+            const res = await fetch(`http://130.193.41.152:5000/issues/${uid}`);
             const json = await res.json();
 
             this.setState({

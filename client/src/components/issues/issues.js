@@ -22,7 +22,7 @@ class Issues extends React.Component {
 
     async componentDidMount() {
         try {
-            const res = await fetch('http://130.193.41.152/issues');
+            const res = await fetch('http://130.193.41.152:5000/issues');
             const json = await res.json();
 
             this.setState({
