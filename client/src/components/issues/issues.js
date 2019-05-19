@@ -3,6 +3,7 @@ import b_ from 'b_';
 
 import IssueCard from '../issue-card';
 
+import IssuesFilter from '../issues-filter';
 import SearchBar from '../search-bar';
 import './issues.css';
 
@@ -73,6 +74,7 @@ class Issues extends React.Component {
 
         return (
             <div className={b()}>
+                <IssuesFilter />
                 <SearchBar />
                 {issues.map(issue => (
                     <IssueCard
