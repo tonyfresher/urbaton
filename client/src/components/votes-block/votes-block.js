@@ -16,15 +16,21 @@ class VotesBlock extends React.Component {
     }
 
     toggleVote = event => {
+        const { uid, voted } = this.state;
+
         event.preventDefault();
 
         this.setState(({ voted }) => ({ voted: !voted }));
-        fetch('', { method: 'POST' });
+
+        fetch(`http://130.193.41.152:5000/issues/${uid}/votes`, {
+            method: 'PUT',
+            body: JSON.stringify({ enable: !voted })
+        });
     }
 
     render() {
         const { voted } = this.state;
-        const { votes } = this.props;
+        const { uid, votes } = this.props;
 
         return (
             <div className={b()}>
