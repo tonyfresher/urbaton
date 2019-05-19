@@ -4,11 +4,11 @@ import b_ from 'b_';
 import Issues from '../../components/issues';
 import AddButton from '../../components/add-button';
 
-import './list.css';
+import './list-page.css';
 
 const b = b_.with('list-page');
 
-class List extends React.Component {
+class ListPage extends React.Component {
     render() {
         return (
             <div className={b()}>
@@ -19,4 +19,4 @@ class List extends React.Component {
     }
 }
 
-export default List;
+export default ListPage;

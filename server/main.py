@@ -11,4 +11,4 @@ app.register_blueprint(issues_app)
 if __name__ == '__main__':
     logging.basicConfig(format='%(asctime)s %(message)s', level=logging.INFO)
 
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=True)

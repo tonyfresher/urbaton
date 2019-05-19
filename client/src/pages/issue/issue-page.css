@@ -1,0 +1,7 @@
+.issue-page {
+    height: 100%;
+
+    background: var(--lightGray);
+
+    overflow-y: scroll;
+}

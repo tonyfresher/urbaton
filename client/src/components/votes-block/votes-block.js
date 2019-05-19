@@ -34,7 +34,7 @@ class VotesBlock extends React.Component {
                             {`${(Math.min(votes, 150) / 150 * 100).toFixed(0)}%`}
                         </span>
                         <span className={b('caption-label')}>
-                            {'Идёт сбор'}
+                            {'Голосование'}
                         </span>
                     </div>
                     <div className={b('vote-button', { checked: voted })} onClick={this.toggleVote}>
