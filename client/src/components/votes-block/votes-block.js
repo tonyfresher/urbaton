@@ -36,7 +36,6 @@ class VotesBlock extends React.Component {
     render() {
         const { voted } = this.state;
         const {
-            uid,
             votes,
             showButton
         } = this.props;
@@ -65,10 +64,12 @@ class VotesBlock extends React.Component {
                         </span>
                     </button>
                 </div>
-                {showButton && <ActionButton
-                    title={voted ? 'Убрать голос' : 'Проголосовать' }
-                    onClick={this.toggleVote}
-                    />}
+                {showButton && (
+                    <ActionButton
+                        title={voted ? 'Убрать голос' : 'Проголосовать' }
+                        onClick={this.toggleVote}
+                    />
+                )}
             </div>
         );
     }
