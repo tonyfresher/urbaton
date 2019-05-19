@@ -1,3 +1,12 @@
 .issues {
-    padding: 60px 8px 0;
+    padding: 80px 8px 0;
+}
+
+/* TODO: Сделать фильтр и убрать */
+.issues-filter {
+    display: none;
+}
+
+.search-bar + .issue-card {
+    margin-top: 8px;
 }
