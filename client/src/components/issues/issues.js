@@ -1,7 +1,7 @@
 import React from 'react';
 import b_ from 'b_';
 
-import Issue from '../issue';
+import IssueCard from '../issue-card';
 
 import SearchBar from '../search-bar';
 import './issues.css';
@@ -75,7 +75,7 @@ class Issues extends React.Component {
             <div className={b()}>
                 <SearchBar />
                 {issues.map(issue => (
-                    <Issue
+                    <IssueCard
                         uid={issue.uid}
                         image={issue.image}
                         name={issue.name}
