@@ -1,5 +1,7 @@
 .issues {
-    padding: 80px 8px 0;
+    padding: 20px 8px 0;
+
+    height: 100%;
 }
 
 /* TODO: Сделать фильтр и убрать */

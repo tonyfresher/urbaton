@@ -1,6 +1,7 @@
 import React from 'react';
 import b_ from 'b_';
 
+import Loader from '../loader';
 import VotesBlock from '../votes-block';
 import './issue-info.css';
 
@@ -37,7 +38,11 @@ class IssueInfo extends React.Component {
         }
     }
 
-    render() {
+    renderLoader() {
+        return (<Loader />);
+    }
+
+    renderInfo() {
         const {
             issue: {
                 uid,
@@ -50,7 +55,7 @@ class IssueInfo extends React.Component {
         } = this.state;
 
         return (
-            <div className={b()}>
+            <>
                 <img className={b('image')} src={image} alt="Фото" />
                 <div className={b('info')}>
                     <h2 className={b('name')}>{name}</h2>
@@ -58,6 +63,16 @@ class IssueInfo extends React.Component {
                     <span className={b('description')}>{description}</span>
                     <VotesBlock uid={uid} votes={votes} showButton />
                 </div>
+            </>
+        );
+    }
+
+    render() {
+        const { loaded } = this.state;
+
+        return (
+            <div className={b()}>
+                {loaded ? this.renderInfo() : this.renderLoader()}
             </div>
         );
     }

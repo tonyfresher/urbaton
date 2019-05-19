@@ -1,8 +1,17 @@
 .issue-page {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
     height: 100%;
 
     background: var(--lightGray);
 
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
+}
+
+.issue-page .issue-info {
+    width: 100%;
+    height: 100%;
 }

@@ -5,12 +5,14 @@ import IssueCard from '../issue-card';
 
 import IssuesFilter from '../issues-filter';
 import SearchBar from '../search-bar';
+import Loader from '../loader';
 import './issues.css';
 
 const b = b_.with('issues');
 
 function shouldShowIssue(issue, query) {
     return issue.name.toLowerCase().includes(query.toLowerCase()) ||
+        issue.coordinates.address.toLowerCase().includes(query.toLowerCase()) ||
         issue.description.toLowerCase().includes(query.toLowerCase());
 }
 
@@ -49,14 +51,18 @@ class Issues extends React.Component {
         this.setState(() => ({ query }));
     }
 
-    render() {
+    renderLoader() {
+        return (<Loader />);
+    }
+
+    renderList() {
         const {
             query,
             issues
         } = this.state;
 
         return (
-            <div className={b()}>
+            <>
                 <IssuesFilter />
                 <SearchBar onInput={this.onInput} />
                 {issues
@@ -72,6 +78,16 @@ class Issues extends React.Component {
                             key={issue.uid}
                         />
                     ))}
+            </>
+        );
+    }
+
+    render() {
+        const { loaded } = this.state;
+
+        return (
+            <div className={b()}>
+                {loaded ? this.renderList() : this.renderLoader()}
             </div>
         );
     }

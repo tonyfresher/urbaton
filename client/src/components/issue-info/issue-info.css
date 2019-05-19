@@ -3,6 +3,7 @@
     flex-direction: column;
 
     background: var(--white);
+    box-sizing: border-box;
 }
 
 .issue-info__info {
