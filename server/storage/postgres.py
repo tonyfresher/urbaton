@@ -29,7 +29,7 @@ class PostgresClient:
         logging.info(f'Fetched {len(issues)} issues:\n{issues_str}')
 
         issues_dict = [
-            self.get_dict(issue)
+            self._get_dict(issue)
             for issue in issues
         ]
 
@@ -64,10 +64,10 @@ class PostgresClient:
         issue = self._fetch(QUERY, request_id=request_id)[0]
         logging.info(f'Fetched issue: {issue}')
 
-        return self.get_dict(issue)
+        return self._get_dict(issue)
 
-    def put_issue(self, request_id, name, description, image, coordinates):
-        QUERY = self.get_query(request_id, name, description, image, coordinates)
+    def update_issue(self, request_id, name, description, image, coordinates):
+        QUERY = self._get_query(request_id, name, description, image, coordinates)
 
         self._execute(
             QUERY,
@@ -122,8 +122,7 @@ class PostgresClient:
 
             return fetched
 
-    @staticmethod
-    def get_dict(issue):
+    def _get_dict(self, issue):
         return {
             'uid': issue.uid,
             'name': issue.name,
@@ -142,8 +141,7 @@ class PostgresClient:
             'cost': project.cost
         }
 
-    @staticmethod
-    def get_query(request_id, name, description, image, coordinates):
+    def _get_query(self, request_id, name, description, image, coordinates):
         QUERY = 'UPDATE issues SET '
         if name:
             QUERY += 'name = %(name)s, '

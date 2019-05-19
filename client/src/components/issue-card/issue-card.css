@@ -1,4 +1,4 @@
-.issue {
+.issue-card {
     display: flex;
     flex-direction: column;
 
@@ -6,47 +6,47 @@
 
     border: 1px solid #eee;
     border-radius: 8px;
-    box-shadow: 0 0 8px rgba(128, 128, 128, 0.2);
+    box-shadow: 0 2px 8px rgba(128, 128, 128, 0.2);
 
     overflow: hidden;
 }
 
-.issue * {
+.issue-card * {
     color: var(--black);
 }
 
-.issue + .issue {
+.issue-card + .issue-card {
     margin-top: 8px;
 }
 
-.issue__info {
+.issue-card__info {
     display: flex;
     flex-direction: column;
 
     margin: 8px 8px 20px;
 }
 
-.issue__image {
+.issue-card__image {
     width: 100%;
     max-height: 200px;
 
     object-fit: cover;
 }
 
-.issue__name {
+.issue-card__name {
     margin: 6px 0 4px;
 
     font-size: 22px;
 }
 
-.issue__address {
+.issue-card__address {
     margin: 0 0 12px;
 
     color: var(--darkGray);
     font-size: 16px;
 }
 
-.issue__description {
+.issue-card__description {
     margin-bottom: 16px;
 
     max-height: 64px;

@@ -1,7 +1,11 @@
 from uuid import uuid4
 
 from flask import Blueprint, jsonify, request
-from psycopg2 import ProgrammingError
+from storage.postgres import postgres
+from psycopg2 import InternalError, ProgrammingError
+
+import logging
+import geocoder
 
 from storage.postgres import postgres
 
@@ -12,6 +16,15 @@ def error(message):
         'status': 'error',
         'message': message
     })
+
+@app.after_request
+def cors(res):
+    headers = res.headers
+    headers['Access-Control-Allow-Origin'] = '*'
+    headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
+    headers['Access-Control-Allow-Headers'] = '*'
+
+    return res
 
 @app.route('/issues')
 def get_issues():
@@ -31,8 +44,25 @@ def create_issue():
     image = request_json['image']
     coordinates = request_json['coordinates']
 
+    lat = coordinates.get('lat')
+    lng = coordinates.get('lng')
+
+    if not(lat and lng):
+        return error('Coordinates are not valid')
+
     if type(coordinates) != dict:
         return error('Coordinates must be in json')
+
+    try:
+        geo_response = geocoder.yandex([lat, lng], method='reverse')
+    except ValueError as err:
+        return error(str(err))
+    
+    coordinates = {
+        'lat': geo_response.lat,
+        'lng': geo_response.lng,
+        'address': geo_response.address
+    }
 
     postgres.create_issue(str(uuid4()), name, description, image, coordinates)
 
@@ -42,7 +72,7 @@ def create_issue():
 def get_issue_by_id(id):
     response = postgres.get_issue_by_id(id)
 
-    return response if response else error("Issue not found")
+    return jsonify(response) if response else error("Issue not found")
 
 @app.route('/issues/<id>', methods=['PUT'])
 def update_issue(id):
@@ -54,7 +84,7 @@ def update_issue(id):
     coordinates = request_json.get('coordinates', {})
 
     try:
-        postgres.put_issue(id, name, description, image, coordinates)
+        postgres.update_issue(id, name, description, image, coordinates)
     except ProgrammingError as err:
         return error(str(err))
 
@@ -72,7 +102,7 @@ def get_issue_votes(id):
 
     return response[0][0] if response else error('Issue not found')
 
-@app.route('/issues/<id>/votes', methods=['POST'])
+@app.route('/issues/<id>/votes', methods=['PUT'])
 def change_vote(id):
     postgres.post_issue_votes_by_id(id)
 

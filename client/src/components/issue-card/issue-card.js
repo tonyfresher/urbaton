@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import b_ from 'b_';
 
 import VotesBlock from '../votes-block';
-import './issue.css';
+import './issue-card.css';
 
-const b = b_.with('issue');
+const b = b_.with('issue-card');
 
-class Issue extends React.Component {
+class IssueCard extends React.Component {
     render() {
         const {
             uid,
@@ -32,4 +32,4 @@ class Issue extends React.Component {
     }
 }
 
-export default Issue;
+export default IssueCard;
