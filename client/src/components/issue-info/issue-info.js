@@ -21,7 +21,7 @@ async function getProject(issueUid) {
 
     return {
         "name": "Реконструкция городского пространства",
-        "description": "Будем реконструировать\n– так,\n–так,\n– и так.",
+        "description": "Будем реконструировать\n– так,\n– так,\n– и так.",
         "cost": 100000
     };
 }
@@ -75,14 +75,15 @@ class IssueInfo extends React.Component {
                     <h2 className={b('name')}>{issue.name}</h2>
                     <span className={b('address')}>{issue.coordinates.address}</span>
                     <span className={b('description')}>{issue.description}</span>
-                    <VotesBlock uid={issue.uid} votes={issue.votes} showButton />
-                    {!isEmpty(project) && (
-                        <ProjectInfo
-                            name={project.name}
-                            description={project.description}
-                            cost={project.cost}
-                        />
-                    )}
+                    {isEmpty(project)
+                        ? (<VotesBlock uid={issue.uid} votes={issue.votes} showButton />)
+                        : (
+                            <ProjectInfo
+                                name={project.name}
+                                description={project.description}
+                                cost={project.cost}
+                            />
+                        )}
                 </div>
             </>
         );

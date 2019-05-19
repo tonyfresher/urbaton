@@ -15,9 +15,9 @@ class ProjectInfo extends React.Component {
 
         return (
             <div className={b()}>
-                <h2>{name}</h2>
-                <span>{cost}</span>
-                <span>{description}</span>
+                <h2 className={b('name')}>{name}</h2>
+                <span className={b('description')}>{description}</span>
+                {/* <span className={b('cost')}>{cost}</span> */}
             </div>
         );
     }

@@ -21,7 +21,7 @@
 }
 
 .issue-info__name {
-    margin: 6px 0 4px;
+    margin: 10px 0 4px;
 
     font-size: 22px;
 }
@@ -36,5 +36,10 @@
 .issue-info__description {
     margin-bottom: 16px;
 
+    white-space: pre-wrap;
     font-size: 16px;
+}
+
+.issue-info .votes-block {
+    margin-bottom: 20px;
 }
