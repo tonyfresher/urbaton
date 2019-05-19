@@ -16,7 +16,7 @@ class AppRouter extends React.Component {
                     <Switch>
                         <Redirect exact from="/" to="/list" />
                         <Route path="/list" component={ListPage} />
-                        <Route path="/issue/:id" component={IssuePage} />
+                        <Route path="/issue/:uid" component={IssuePage} />
                         <Route path="/create" component={CreatePage} />
                         {/* <Route path="*" component={Error} status={404} /> */}
                     </Switch>

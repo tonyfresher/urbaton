@@ -9,10 +9,12 @@ const b = b_.with('issue-page');
 
 class IssuePage extends React.Component {
     render() {
+        const { match: { params: { uid } } } = this.props;
+
         return (
             <div className={b()}>
                 <BackButton />
-                <IssueInfo />
+                <IssueInfo uid={uid} />
             </div>
         );
     }
