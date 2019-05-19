@@ -74,7 +74,7 @@ def update_issue(id):
     coordinates = request_json.get('coordinates', {})
 
     try:
-        postgres.put_issue(id, name, description, image, coordinates)
+        postgres.update_issue(id, name, description, image, coordinates)
     except ProgrammingError as err:
         return error(str(err))
 
