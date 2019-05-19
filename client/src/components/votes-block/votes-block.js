@@ -36,13 +36,15 @@ class VotesBlock extends React.Component {
         const { voted } = this.state;
         const { uid, votes } = this.props;
 
+        const votesCount = votes + (voted ? 1 : 0);
+
         return (
             <div className={b()}>
                 <ProgressBar value={votes} />
                 <div className={b('caption')}>
                     <div className={b('progress')}>
                         <span className={b('percentage')}>
-                            {`${(Math.min(votes, 150) / 150 * 100).toFixed(0)}%`}
+                            {`${(Math.min(votesCount, 150) / 150).toFixed(0)}%`}
                         </span>
                         <span className={b('caption-label')}>
                             {'Голосование'}
@@ -51,7 +53,7 @@ class VotesBlock extends React.Component {
                     <button className={b('vote-button', { checked: voted })} onClick={this.toggleVote}>
                         <div className={b('votes-count-wrapper')}>
                             <div className={b('thumb')} />
-                            <span className={b('votes-count')}>{`${votes} голосов`}</span>
+                            <span className={b('votes-count')}>{`${votesCount} голосов`}</span>
                         </div>
                         <span className={b('caption-label')}>
                             {'Собрано'}
