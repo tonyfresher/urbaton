@@ -1,12 +1,13 @@
-from flask import Blueprint, jsonify, request
 from uuid import uuid4
 
+from flask import Blueprint, jsonify, request
 from storage.postgres import postgres
 from psycopg2 import InternalError, ProgrammingError
 
 import logging
 import geocoder
 
+from storage.postgres import postgres
 
 app = Blueprint('issues', __name__)
 
@@ -106,3 +107,26 @@ def change_vote(id):
     postgres.post_issue_votes_by_id(id)
 
     return jsonify('If id is right, then vote is added')
+
+@app.route('/issues/<id>/projects', methods=['GET'])
+def get_project_by_id(id):
+    response = postgres.get_project(id)
+
+    return jsonify(response) if response else error("Project not found")
+
+@app.route('/issues/<id>/projects', methods=['POST'])
+def create_project(id):
+    request_json = request.get_json()
+
+    if len(request_json) < 3:
+        return error('Not enough data for issue creation')
+
+    name = request_json['name']
+    description = request_json['description']
+    cost = request_json['cost']
+
+    project_id = str(uuid4())
+    postgres.create_project(project_id, name, description, cost)
+    postgres.update_project_in_issues(id, project_id)
+
+    return jsonify("Successfully created")

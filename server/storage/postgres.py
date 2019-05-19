@@ -132,6 +132,15 @@ class PostgresClient:
             'votes': issue.votes,
         }
 
+    @staticmethod
+    def get_project_dict(project):
+        return {
+            'uid': project.uid,
+            'name': project.name,
+            'description': project.description,
+            'cost': project.cost
+        }
+
     def _get_query(self, request_id, name, description, image, coordinates):
         QUERY = 'UPDATE issues SET '
         if name:
@@ -146,6 +155,53 @@ class PostgresClient:
             QUERY = QUERY[:-2] + ' '
 
         return QUERY + 'WHERE issues.uid = %(request_id)s'
+
+    def get_project(self, request_id):
+        QUERY = '''
+            SELECT
+                projects.uid,
+                projects.name,
+                projects.description,
+                projects.cost
+            FROM projects
+            JOIN issues
+            ON projects.uid = issues.project
+            WHERE issues.uid = %(request_id)s;
+        '''
+
+        response = self._fetch(QUERY, request_id=request_id)
+
+        if not response:
+            return {}
+
+        project = self._fetch(QUERY, request_id=request_id)[0]
+        logging.info(f'Fetched issue: {project}')
+
+        return self.get_project_dict(project)
+
+    def create_project(self, uid, name, description, cost, account):
+        QUERY = '''
+            INSERT INTO projects(uid, name, description, cost)
+            VALUES (%(uid)s, %(name)s, %(description)s, %(cost)s, %(account)s)
+        '''
+        self._execute(
+            QUERY,
+            uid=uid,
+            name=name,
+            description=description,
+            cost=cost)
+        logging.info('Successfully created')
+
+    def update_project_in_issues(self, request_id, project_id):
+        QUERY='''UPDATE issues
+            SET project = %(project_id)s
+            WHERE issues.uid = %(request_id)s
+        '''
+
+        self._execute(QUERY, request_id=request_id, project_id=project_id)
+
+        logging.info("Project connected to issue")
+
 
 postgres = PostgresClient(settings.PG_HOST, settings.PG_PORT, settings.PG_DBNAME,
                           settings.PG_USER, settings.PG_PASS)
