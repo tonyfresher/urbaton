@@ -37,14 +37,15 @@ class VotesBlock extends React.Component {
         const { uid, votes } = this.props;
 
         const votesCount = votes + (voted ? 1 : 0);
+        console.log(votes, votesCount);
 
         return (
             <div className={b()}>
-                <ProgressBar value={votes} />
+                <ProgressBar value={votesCount} />
                 <div className={b('caption')}>
                     <div className={b('progress')}>
                         <span className={b('percentage')}>
-                            {`${(Math.min(votesCount, 150) / 150).toFixed(0)}%`}
+                            {`${(Math.min(votesCount, 150) / 150 * 100).toFixed(0)}%`}
                         </span>
                         <span className={b('caption-label')}>
                             {'Голосование'}
