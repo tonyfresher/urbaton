@@ -1,6 +1,7 @@
 import React from 'react';
 import b_ from 'b_';
 
+import BackButton from '../../components/back-button';
 import './create-page.css';
 
 const b = b_.with('create-page');
@@ -8,7 +9,9 @@ const b = b_.with('create-page');
 class CreatePage extends React.Component {
     render() {
         return (
-            <div className={b()} />
+            <div className={b()}>
+                <BackButton />
+            </div>
         );
     }
 }

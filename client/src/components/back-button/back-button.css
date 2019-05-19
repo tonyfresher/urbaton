@@ -1,0 +1,16 @@
+.back-button {
+    padding: 16px 50px 16px 8px;
+
+    background: 0;
+    border: 0;
+
+    cursor: pointer;
+    outline: none;
+}
+
+.back-button__arrow {
+    width: 36px;
+    height: 36px;
+
+    fill: var(--black);
+}

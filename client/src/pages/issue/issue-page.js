@@ -1,6 +1,7 @@
 import React from 'react';
 import b_ from 'b_';
 
+import BackButton from '../../components/back-button';
 import './issue-page.css';
 
 const b = b_.with('issue-page');
@@ -8,7 +9,10 @@ const b = b_.with('issue-page');
 class IssuePage extends React.Component {
     render() {
         return (
-            <div className={b()} />
+            <div className={b()}>
+                <BackButton />
+                <div />
+            </div>
         );
     }
 }
