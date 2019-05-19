@@ -16,14 +16,8 @@ async function getIssue(issueUid) {
 }
 
 async function getProject(issueUid) {
-    // const res = await fetch(`http://130.193.41.152:5000/issues/${issueUid}/project`);
-    // return res.json();
-
-    return {
-        "name": "Реконструкция городского пространства",
-        "description": "Будем реконструировать\n– так,\n– так,\n– и так.",
-        "cost": 100000
-    };
+    const res = await fetch(`http://130.193.41.152:5000/issues/${issueUid}/projects`);
+    return res.json();
 }
 
 class IssueInfo extends React.Component {
