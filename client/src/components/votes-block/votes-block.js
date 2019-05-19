@@ -45,7 +45,7 @@ class VotesBlock extends React.Component {
 
         return (
             <div className={b()}>
-                <ProgressBar value={votesCount} />
+                <ProgressBar value={votesCount || 0} />
                 <div className={b('caption')}>
                     <div className={b('progress')}>
                         <span className={b('percentage')}>
