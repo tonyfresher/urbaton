@@ -66,3 +66,7 @@
 .votes-block__vote-button_checked .votes-block__caption-label {
     color: var(--accentBlue);
 }
+
+.votes-block__caption + .action-button {
+    margin-top: 12px;
+}

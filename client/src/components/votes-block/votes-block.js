@@ -2,6 +2,7 @@ import React from 'react';
 import b_ from 'b_';
 
 import ProgressBar from '../progress-bar';
+import ActionButton from '../action-button';
 import './votes-block.css';
 
 const b = b_.with('votes-block');
@@ -60,6 +61,7 @@ class VotesBlock extends React.Component {
                         </span>
                     </button>
                 </div>
+                <ActionButton title="Проголосовать" onClick={this.toggleVote} />
             </div>
         );
     }
