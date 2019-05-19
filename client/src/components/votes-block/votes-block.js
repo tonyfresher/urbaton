@@ -65,7 +65,10 @@ class VotesBlock extends React.Component {
                         </span>
                     </button>
                 </div>
-                {showButton && <ActionButton title="Проголосовать" onClick={this.toggleVote} />}
+                {showButton && <ActionButton
+                    title={voted ? 'Убрать голос' : 'Проголосовать' }
+                    onClick={this.toggleVote}
+                    />}
             </div>
         );
     }

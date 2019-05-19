@@ -13,6 +13,7 @@ class IssueInfo extends React.Component {
         this.state = {
             loaded: false,
             issue: {},
+            project: null,
             error: null
         };
     }
