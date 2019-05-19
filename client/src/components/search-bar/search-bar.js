@@ -10,7 +10,7 @@ class SearchBar extends React.Component {
         return (
             <div className={b()}>
                 <div className={b('lens')} />
-                <input className={b('input')} type="text" placeholder={'Поиск'} />
+                <input className={b('input')} type="text" placeholder="Поиск" />
             </div>
         );
     }

@@ -1,8 +1,15 @@
+.issue-info {
+    display: flex;
+    flex-direction: column;
+
+    background: var(--white);
+}
+
 .issue-info__info {
     display: flex;
     flex-direction: column;
 
-    margin: 8px 8px 20px;
+    margin: 8px 16px 20px;
 }
 
 .issue-info__image {

@@ -13,6 +13,7 @@ class IssueInfo extends React.Component {
         this.state = {
             loaded: false,
             issue: {},
+            project: null,
             error: null
         };
     }
@@ -55,7 +56,7 @@ class IssueInfo extends React.Component {
                     <h2 className={b('name')}>{name}</h2>
                     <span className={b('address')}>{address}</span>
                     <span className={b('description')}>{description}</span>
-                    <VotesBlock uid={uid} votes={votes} />
+                    <VotesBlock uid={uid} votes={votes} showButton />
                 </div>
             </div>
         );
