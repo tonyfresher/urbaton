@@ -1,0 +1,40 @@
+.money-block__caption {
+    display: flex;
+    justify-content: space-between;
+
+    margin-top: 6px;
+
+    font-size: 16px;
+}
+
+.money-block__progress,
+.money-block__money {
+    display: flex;
+    flex-direction: column;
+}
+
+.money-block__progress {
+    align-items: flex-start;
+}
+
+.money-block__money  {
+    padding: 0;
+
+    align-items: flex-end;
+}
+
+.money-block__percentage,
+.money-block__money-count {
+    font-weight: 600;
+}
+
+.money-block .money-block__caption-label {
+    color: var(--darkGray);
+
+    text-transform: lowercase;
+    font-variant: small-caps;
+}
+
+.money-block__caption + .action-button {
+    margin-top: 12px;
+}
