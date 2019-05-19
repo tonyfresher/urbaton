@@ -21,6 +21,7 @@ def cors(res):
     headers = res.headers
     headers['Access-Control-Allow-Origin'] = '*'
     headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
+    headers['Access-Control-Allow-Headers'] = '*'
 
     return res
 
