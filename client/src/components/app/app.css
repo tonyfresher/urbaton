@@ -56,7 +56,8 @@ a:hover
         width: 400px;
         height: 90%;
 
-        border-radius: 16px;
+        border: 10px solid #333;
+        border-radius: 28px;
         overflow: hidden;
     }
 }

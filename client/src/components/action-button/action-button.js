@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import b_ from 'b_';
 
 import './action-button.css';

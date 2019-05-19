@@ -1,0 +1,21 @@
+.project-info {
+    display: flex;
+    flex-direction: column;
+
+    padding: 8px 12px 16px;
+
+    border-radius: 6px;
+    background: var(--lightGray);
+}
+
+.project-info__name {
+    margin: 6px 0 12px;
+
+    font-size: 22px;
+}
+
+.project-info__description {
+    margin-bottom: 16px;
+
+    white-space: pre-wrap;
+}

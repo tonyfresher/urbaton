@@ -36,7 +36,6 @@ class VotesBlock extends React.Component {
     render() {
         const { voted } = this.state;
         const {
-            uid,
             votes,
             showButton
         } = this.props;
@@ -45,7 +44,7 @@ class VotesBlock extends React.Component {
 
         return (
             <div className={b()}>
-                <ProgressBar value={votesCount || 0} />
+                <ProgressBar value={votes} max={150} />
                 <div className={b('caption')}>
                     <div className={b('progress')}>
                         <span className={b('percentage')}>
@@ -65,10 +64,12 @@ class VotesBlock extends React.Component {
                         </span>
                     </button>
                 </div>
-                {showButton && <ActionButton
-                    title={voted ? 'Убрать голос' : 'Проголосовать' }
-                    onClick={this.toggleVote}
-                    />}
+                {showButton && (
+                    <ActionButton
+                        title={voted ? 'Убрать голос' : 'Проголосовать' }
+                        onClick={this.toggleVote}
+                    />
+                )}
             </div>
         );
     }

@@ -3,6 +3,7 @@
     flex-direction: column;
 
     background: var(--white);
+    box-sizing: border-box;
 }
 
 .issue-info__info {
@@ -20,7 +21,7 @@
 }
 
 .issue-info__name {
-    margin: 6px 0 4px;
+    margin: 10px 0 4px;
 
     font-size: 22px;
 }
@@ -35,5 +36,14 @@
 .issue-info__description {
     margin-bottom: 16px;
 
+    white-space: pre-wrap;
     font-size: 16px;
+}
+
+.issue-info .votes-block {
+    margin-bottom: 20px;
+}
+
+.issue-info .money-block {
+    margin-bottom: 20px;
 }
