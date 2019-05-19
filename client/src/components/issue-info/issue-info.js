@@ -23,6 +23,7 @@ class IssueInfo extends React.Component {
         try {
             const res = await fetch(`http://130.193.41.152:5000/issues/${uid}`);
             const json = await res.json();
+            console.log(json);
 
             this.setState({
                 loaded: true,
@@ -41,7 +42,7 @@ class IssueInfo extends React.Component {
             issue: {
                 image,
                 name,
-                address,
+                coordinates: { address } = {},
                 description,
                 votes
             }
