@@ -3,6 +3,8 @@
     justify-content: space-between;
 
     margin-top: 6px;
+
+    font-size: 16px;
 }
 
 .votes-block__progress,
@@ -16,7 +18,18 @@
 }
 
 .votes-block__vote-button  {
+    padding: 0;
+
     align-items: flex-end;
+
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 16px;
+
+    background: 0;
+    border: 0;
+
+    cursor: pointer;
+    outline: none;
 }
 
 .votes-block__percentage,
@@ -52,4 +65,8 @@
 .votes-block__vote-button_checked .votes-block__votes-count,
 .votes-block__vote-button_checked .votes-block__caption-label {
     color: var(--accentBlue);
+}
+
+.votes-block__caption + .action-button {
+    margin-top: 12px;
 }

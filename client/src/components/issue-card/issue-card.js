@@ -25,7 +25,7 @@ class IssueCard extends React.Component {
                     <h2 className={b('name')}>{name}</h2>
                     <span className={b('address')}>{address}</span>
                     <span className={b('description')}>{description}</span>
-                    <VotesBlock votes={votes} />
+                    <VotesBlock uid={uid} votes={votes} />
                 </div>
             </Link>
         );
