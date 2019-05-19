@@ -34,7 +34,7 @@ class PostgresClient:
         ]
 
         return issues_dict
-    
+
     def create_issue(self, uid, name, description, image, coordinates):
         QUERY = '''
             INSERT INTO issues(uid, name, description, image, coordinates)
@@ -111,7 +111,7 @@ class PostgresClient:
     def _execute(self, query, **kwargs) -> None:
         with self.connection.cursor() as cursor:
             cursor.execute(query, kwargs)
-        
+
         self.connection.commit()
 
     def _fetch(self, query, **kwargs):
@@ -179,21 +179,24 @@ class PostgresClient:
 
         return self.get_project_dict(project)
 
-    def create_project(self, uid, name, description, cost, account):
+    def create_project(self, name, description, cost, account_id, project_id, issue_id):
         QUERY = '''
-            INSERT INTO projects(uid, name, description, cost)
-            VALUES (%(uid)s, %(name)s, %(description)s, %(cost)s, %(account)s)
+            INSERT INTO projects(uid, name, description, cost, account)
+            VALUES (%(uid)s, %(name)s, %(description)s, %(cost)s, %(account)s);
         '''
+        self._create_account(account_id, 0)
         self._execute(
             QUERY,
-            uid=uid,
+            uid=project_id,
             name=name,
             description=description,
-            cost=cost)
+            cost=cost,
+            account=account_id)
+        self._update_project_in_issues(issue_id, project_id)
         logging.info('Successfully created')
 
-    def update_project_in_issues(self, request_id, project_id):
-        QUERY='''UPDATE issues
+    def _update_project_in_issues(self, request_id, project_id):
+        QUERY = '''UPDATE issues
             SET project = %(project_id)s
             WHERE issues.uid = %(request_id)s
         '''
@@ -201,6 +204,14 @@ class PostgresClient:
         self._execute(QUERY, request_id=request_id, project_id=project_id)
 
         logging.info("Project connected to issue")
+
+    def _create_account(self, request_id, cash):
+        QUERY = '''INSERT INTO accounts(uid, cash) 
+            VALUES (%(request_id)s, %(cash)s)
+                '''
+
+        self._execute(QUERY, request_id=request_id, cash=cash)
+        logging.info('Account successfully created')
 
 
 postgres = PostgresClient(settings.PG_HOST, settings.PG_PORT, settings.PG_DBNAME,

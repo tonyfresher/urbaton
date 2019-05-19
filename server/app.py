@@ -126,7 +126,6 @@ def create_project(id):
     cost = request_json['cost']
 
     project_id = str(uuid4())
-    postgres.create_project(project_id, name, description, cost)
-    postgres.update_project_in_issues(id, project_id)
-
+    account_id = str(uuid4())
+    postgres.create_project(name, description, cost, account_id, project_id, id)
     return jsonify("Successfully created")
