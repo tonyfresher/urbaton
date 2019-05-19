@@ -37,7 +37,6 @@ class VotesBlock extends React.Component {
         const { uid, votes } = this.props;
 
         const votesCount = votes + (voted ? 1 : 0);
-        console.log(votes, votesCount);
 
         return (
             <div className={b()}>
