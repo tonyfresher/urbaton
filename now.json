@@ -2,7 +2,13 @@
     "name": "urbaton",
     "version": 2,
     "builds": [
-        { "src": "client/package.json", "use": "@now/static-build" }
+        {
+            "src": "client/package.json",
+            "use": "@now/static-build",
+            "config": {
+                "distDir": "client/build"
+            }
+        }
     ],
     "routes": [
         { "src": "/(.*)", "dest": "/$1" }
