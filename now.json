@@ -3,11 +3,15 @@
     "name": "urbaton",
     "builds": [
         {
-            "src": "package.json",
-            "use": "@now/static-build",
+            "src": "client/package.json",
+            "use": "@now/staic-build",
             "config": {
-                "distDir": "build"
+                "distDir": "client/build"
             }
+        },
+        {
+            "src": "server/**/*.py",
+            "use": "@now/python"
         }
     ],
     "routes": [
@@ -42,11 +46,12 @@
             "dest": "/service-worker.js"
         },
         {
-            "src": "/(.*)",
+            "src": "/index.html",
             "headers": {
                 "cache-control": "s-maxage=0"
             },
             "dest": "/index.html"
-        }
+        },
+        { "src": "/server/(.*)", "dest": "/$1" }
     ]
 }
